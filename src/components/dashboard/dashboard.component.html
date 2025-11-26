@@ -1,0 +1,210 @@
+@switch (userType()) {
+  @case ('user') {
+    <header class="flex items-center justify-between p-4 border-b border-purple-500/20">
+      <h2 class="font-orbitron text-lg text-white">User Dashboard</h2>
+      <button (click)="logout.emit()" title="Logout" class="p-2 rounded-full transition-colors hover:bg-purple-500/20">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        </svg>
+      </button>
+    </header>
+
+    <main class="flex-1 overflow-y-auto p-6">
+      <div class="text-center mb-8">
+        <h1 class="text-2xl font-bold text-gray-200">Welcome</h1>
+        <p class="text-purple-300">How can Luma assist you today?</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <button (click)="startChat.emit()" class="transform-3d-card group relative p-6 bg-gray-900/50 border border-purple-500/30 rounded-lg text-left transition-all duration-300 hover:bg-purple-500/20 hover:border-amber-400 hover:shadow-lg hover:shadow-amber-500/20">
+          <div class="flex items-start justify-between">
+            <div>
+              <h3 class="font-orbitron text-lg text-purple-300 group-hover:text-amber-300 transition-colors">Talk to Luma X</h3>
+              <p class="text-sm text-gray-400 mt-1">Engage with your AI companion.</p>
+            </div>
+            <svg class="h-8 w-8 text-purple-400 group-hover:text-amber-300 transition-all duration-300 group-hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" /></svg>
+          </div>
+        </button>
+        <button (click)="navigate.emit('exercises')" class="transform-3d-card group relative p-6 bg-gray-900/50 border border-purple-500/30 rounded-lg text-left transition-all duration-300 hover:bg-purple-500/20 hover:border-amber-400 hover:shadow-lg hover:shadow-amber-500/20">
+          <div class="flex items-start justify-between">
+            <div>
+              <h3 class="font-orbitron text-lg text-purple-300 group-hover:text-amber-300 transition-colors">Wellness Exercises</h3>
+              <p class="text-sm text-gray-400 mt-1">Breathing and mindfulness activities.</p>
+            </div>
+            <svg class="h-8 w-8 text-purple-400 group-hover:text-amber-300 transition-all duration-300 group-hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>
+          </div>
+        </button>
+        <button (click)="navigate.emit('sessions')" class="transform-3d-card group relative p-6 bg-gray-900/50 border border-purple-500/30 rounded-lg text-left transition-all duration-300 hover:bg-purple-500/20 hover:border-amber-400 hover:shadow-lg hover:shadow-amber-500/20">
+          <div class="flex items-start justify-between">
+            <div>
+              <h3 class="font-orbitron text-lg text-purple-300 group-hover:text-amber-300 transition-colors">1:1 Sessions</h3>
+              <p class="text-sm text-gray-400 mt-1">Book a session with a consultant.</p>
+            </div>
+            <svg class="h-8 w-8 text-purple-400 group-hover:text-amber-300 transition-all duration-300 group-hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m-7.5-2.962A3.75 3.75 0 0112 15v-2.25A3.75 3.75 0 0115.75 9h-1.5A2.25 2.25 0 0012 7.5v-1.5A2.25 2.25 0 009.75 3.75c-1.036 0-1.94.59-2.38 1.447A3.75 3.75 0 019 15v-2.25A3.75 3.75 0 0112 9h1.5m-3 0a2.25 2.25 0 00-2.25 2.25v1.5A2.25 2.25 0 009.75 15h1.5" /></svg>
+          </div>
+        </button>
+        <button (click)="navigate.emit('resources')" class="transform-3d-card group relative p-6 bg-gray-900/50 border border-purple-500/30 rounded-lg text-left transition-all duration-300 hover:bg-purple-500/20 hover:border-amber-400 hover:shadow-lg hover:shadow-amber-500/20">
+          <div class="flex items-start justify-between">
+            <div>
+              <h3 class="font-orbitron text-lg text-purple-300 group-hover:text-amber-300 transition-colors">Helpful Resources</h3>
+              <p class="text-sm text-gray-400 mt-1">Find articles and helplines.</p>
+            </div>
+            <svg class="h-8 w-8 text-purple-400 group-hover:text-amber-300 transition-all duration-300 group-hover:scale-110" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 01-2.25 2.25M16.5 7.5V18a2.25 2.25 0 002.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 002.25 2.25h13.5M6 7.5h3v3H6v-3z" /></svg>
+          </div>
+        </button>
+      </div>
+    </main>
+  }
+  @case ('consultant') {
+    <header class="flex items-center justify-between p-4 border-b border-amber-500/20">
+      <h2 class="font-orbitron text-lg text-white">Consultant Dashboard</h2>
+      <button (click)="logout.emit()" title="Logout" class="p-2 rounded-full transition-colors hover:bg-amber-500/20">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        </svg>
+      </button>
+    </header>
+    <main class="flex-1 overflow-y-auto p-6 space-y-6">
+      <div>
+        <h3 class="font-orbitron text-amber-300 mb-3">Upcoming Sessions</h3>
+        <div class="space-y-3">
+          <div class="flex items-center justify-between p-3 bg-gray-900/50 border border-purple-500/30 rounded-lg">
+            <div>
+              <p class="font-semibold text-gray-200">Client ID: 8A2B4C</p>
+              <p class="text-sm text-gray-400">Date: Today @ 3:00 PM</p>
+            </div>
+            <button class="flex items-center space-x-2 text-sm bg-amber-500/20 text-amber-200 px-4 py-2 rounded-full hover:bg-amber-500/40 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 001.553.832l3-2a1 1 0 000-1.664l-3-2z" />
+              </svg>
+              <span>Join Session</span>
+            </button>
+          </div>
+          <div class="flex items-center justify-between p-3 bg-gray-900/50 border border-purple-500/30 rounded-lg">
+            <div>
+              <p class="font-semibold text-gray-200">Client ID: 9F1E3D</p>
+              <p class="text-sm text-gray-400">Date: Tomorrow @ 11:00 AM</p>
+            </div>
+            <button class="flex items-center space-x-2 text-sm bg-amber-500/20 text-amber-200 px-4 py-2 rounded-full hover:bg-amber-500/40 transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 001.553.832l3-2a1 1 0 000-1.664l-3-2z" />
+              </svg>
+              <span>Join Session</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-orbitron text-amber-300 mb-3">Recent Session Ratings</h3>
+        <div class="space-y-3">
+          @for(rating of sessionRatings(); track rating.clientId) {
+            <div class="p-3 bg-gray-900/50 border border-purple-500/30 rounded-lg">
+              <div class="flex justify-between items-center">
+                <p class="font-semibold text-gray-200">Client ID: {{rating.clientId}}</p>
+                <div class="flex items-center">
+                  @for (star of [1, 2, 3, 4, 5]; track star) {
+                    @if (star <= rating.rating) {
+                      <svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    } @else {
+                      <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    }
+                  }
+                </div>
+              </div>
+              <p class="text-sm text-gray-400 mt-2 italic">"{{rating.comment}}"</p>
+            </div>
+          }
+        </div>
+      </div>
+    </main>
+  }
+  @case ('admin') {
+    <header class="flex items-center justify-between p-4 border-b border-amber-500/20">
+      <h2 class="font-orbitron text-lg text-white">Admin Dashboard</h2>
+      <button (click)="logout.emit()" title="Logout" class="p-2 rounded-full transition-colors hover:bg-amber-500/20">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-amber-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+        </svg>
+      </button>
+    </header>
+    <main class="flex-1 overflow-y-auto p-6 space-y-6">
+       <div>
+        <h3 class="font-orbitron text-amber-300 mb-3">System Analytics</h3>
+        <div class="grid grid-cols-2 gap-4">
+           <div class="p-3 bg-gray-900/50 border border-purple-500/30 rounded-lg text-center">
+             <p class="text-2xl font-bold">1,428</p>
+             <p class="text-sm text-gray-400">Active Users</p>
+           </div>
+           <div class="p-3 bg-gray-900/50 border border-purple-500/30 rounded-lg text-center">
+             <p class="text-2xl font-bold">89</p>
+             <p class="text-sm text-gray-400">Consultants</p>
+           </div>
+        </div>
+      </div>
+      <div>
+        <h3 class="font-orbitron text-amber-300 mb-3">User Management</h3>
+        <div class="space-y-4">
+          @for(user of managedUsers(); track user.email) {
+            <div class="p-4 bg-gray-900/50 border border-purple-500/30 rounded-lg">
+              <div class="flex items-start justify-between">
+                <div>
+                  <div class="flex items-center space-x-2">
+                     <p class="font-semibold text-gray-200">{{user.email}}</p>
+                     @if (user.consultantProfile?.isFlagged) {
+                        <span class="font-bold px-2 py-0.5 rounded-full text-xs bg-red-500/50 text-red-200">FLAGGED</span>
+                     }
+                  </div>
+                  <p class="text-xs uppercase" [class.text-green-400]="user.status === 'Active'" [class.text-red-400]="user.status === 'Suspended'">
+                    {{user.role}} - {{user.status}}
+                  </p>
+                </div>
+                <div>
+                  @if (user.status === 'Active') {
+                    <button (click)="toggleUserStatus(user)" class="text-xs bg-red-500/50 text-red-200 px-3 py-1 rounded-full hover:bg-red-500/70 transition-colors">Suspend</button>
+                  } @else {
+                    <button (click)="toggleUserStatus(user)" class="text-xs bg-green-500/50 text-green-200 px-3 py-1 rounded-full hover:bg-green-500/70 transition-colors">Activate</button>
+                  }
+                </div>
+              </div>
+              @if (user.role === 'consultant' && user.consultantProfile) {
+                <div class="mt-4 pt-3 border-t border-purple-500/20 text-sm text-gray-400 space-y-2">
+                  <p><span class="font-semibold text-gray-300">Specialization:</span> {{user.consultantProfile.specialization}}</p>
+                  <p><span class="font-semibold text-gray-300">Education:</span> {{user.consultantProfile.degree}}, {{user.consultantProfile.university}}</p>
+                  <div class="flex items-center justify-between">
+                     <p>
+                        <span class="font-semibold text-gray-300">Verification:</span> 
+                        <span class="font-bold px-2 py-0.5 rounded-full text-xs"
+                          [class.text-yellow-200]="user.consultantProfile.verificationStatus === 'Pending'"
+                          [class.bg-yellow-500/20]="user.consultantProfile.verificationStatus === 'Pending'"
+                          [class.text-green-200]="user.consultantProfile.verificationStatus === 'Verified'"
+                          [class.bg-green-500/20]="user.consultantProfile.verificationStatus === 'Verified'"
+                          [class.text-red-200]="user.consultantProfile.verificationStatus === 'Rejected'"
+                          [class.bg-red-500/20]="user.consultantProfile.verificationStatus === 'Rejected'">
+                          {{user.consultantProfile.verificationStatus}}
+                        </span>
+                      </p>
+                  </div>
+                   <div class="mt-3 pt-3 border-t border-purple-500/30 flex items-center space-x-2">
+                      <span class="font-semibold text-gray-300 text-xs">Admin Actions:</span>
+                       @if (user.consultantProfile.verificationStatus === 'Pending') {
+                        <button (click)="updateVerificationStatus(user, 'Verified')" class="text-xs bg-green-500/50 text-green-200 px-3 py-1 rounded-full hover:bg-green-500/70 transition-colors">Verify</button>
+                        <button (click)="updateVerificationStatus(user, 'Rejected')" class="text-xs bg-red-500/50 text-red-200 px-3 py-1 rounded-full hover:bg-red-500/70 transition-colors">Reject</button>
+                      }
+                      <button (click)="toggleFlagStatus(user)" class="text-xs px-3 py-1 rounded-full transition-colors"
+                        [class.bg-yellow-500/50]="!user.consultantProfile.isFlagged"
+                        [class.text-yellow-200]="!user.consultantProfile.isFlagged"
+                        [class.hover:bg-yellow-500/70]="!user.consultantProfile.isFlagged"
+                        [class.bg-gray-500/50]="user.consultantProfile.isFlagged"
+                        [class.text-gray-200]="user.consultantProfile.isFlagged"
+                        [class.hover:bg-gray-500/70]="user.consultantProfile.isFlagged">
+                          {{ user.consultantProfile.isFlagged ? 'Clear Flag' : 'Flag for Review' }}
+                      </button>
+                   </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </main>
+  }
+}

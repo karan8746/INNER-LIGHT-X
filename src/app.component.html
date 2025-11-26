@@ -1,0 +1,32 @@
+<div class="h-screen w-screen flex flex-col items-center justify-center p-4 text-white overflow-hidden perspective-[1500px]">
+  <div class="w-full h-full max-w-lg mx-auto flex flex-col bg-black/30 backdrop-blur-xl rounded-2xl border border-purple-500/20 shadow-2xl shadow-purple-900/20">
+    @switch (currentView()) {
+      @case ('auth') {
+        <app-auth (loggedIn)="onLoggedIn($event)"></app-auth>
+      }
+      @case ('dashboard') {
+        <app-dashboard 
+          [userType]="userType()"
+          (navigate)="navigateTo($event)"
+          (startChat)="startChatFlow()"
+          (logout)="onLoggedOut()">
+        </app-dashboard>
+      }
+      @case ('mood') {
+        <app-mood-assessment (moodSelected)="onMoodSelected($event)"></app-mood-assessment>
+      }
+      @case ('chat') {
+        <app-chat [initialMood]="selectedMood()" (viewResources)="navigateTo('resources')"></app-chat>
+      }
+      @case ('resources') {
+        <app-resources (backToDashboard)="navigateTo('dashboard')"></app-resources>
+      }
+      @case ('exercises') {
+        <app-exercises (backToDashboard)="navigateTo('dashboard')"></app-exercises>
+      }
+      @case ('sessions') {
+        <app-sessions (backToDashboard)="navigateTo('dashboard')"></app-sessions>
+      }
+    }
+  </div>
+</div>

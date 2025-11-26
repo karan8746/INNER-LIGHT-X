@@ -1,0 +1,129 @@
+<header class="flex items-center p-4 border-b border-purple-500/20">
+  <button (click)="backToDashboard.emit()" title="Back to Dashboard" class="p-2 rounded-full transition-colors hover:bg-purple-500/20">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+    </svg>
+  </button>
+  <h2 class="font-orbitron text-lg text-white ml-4">1:1 Live Sessions</h2>
+</header>
+
+<main class="flex-1 overflow-y-auto p-6">
+  <div class="flex flex-col lg:flex-row gap-8 h-full">
+
+    <!-- Immediate Support Section -->
+    <div class="flex-1 flex flex-col p-6 bg-gray-900/50 border border-purple-500/30 rounded-lg">
+      <h3 class="font-orbitron text-2xl text-amber-300 text-center">Immediate Support</h3>
+      <p class="text-gray-400 mt-2 text-center">
+        Connect with an available consultant or doctor.
+      </p>
+      <div class="text-center my-4">
+        <span class="text-sm bg-purple-500/30 text-purple-200 px-3 py-1 rounded-full">Approx. 5-10 min wait</span>
+      </div>
+
+      <div class="flex-1 flex flex-col items-center justify-center text-center">
+        @switch (connectionStatus()) {
+          @case ('idle') {
+            <button (click)="connectNow()" class="w-full max-w-xs relative inline-flex items-center justify-center px-10 py-3 overflow-hidden font-medium text-amber-300 transition duration-300 ease-out border-2 border-amber-500 rounded-full shadow-md group">
+              <span class="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-amber-500 group-hover:translate-x-0 ease">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+              </span>
+              <span class="absolute flex items-center justify-center w-full h-full text-amber-300 transition-all duration-300 transform group-hover:translate-x-full ease">Connect Now</span>
+              <span class="relative invisible">Connect Now</span>
+            </button>
+          }
+          @case ('connecting') {
+            <div class="animate-fade-in space-y-4">
+               <svg class="animate-spin h-12 w-12 text-amber-400 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <p class="text-purple-300">Finding an available consultant...</p>
+            </div>
+          }
+          @case ('connected') {
+            <div class="animate-fade-in space-y-4">
+               <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-green-400 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+               </svg>
+              <p class="text-green-300 font-bold">Consultant Found!</p>
+              <button class="w-full max-w-xs text-sm bg-green-500/20 text-green-200 px-4 py-2 rounded-full hover:bg-green-500/40 transition-colors">Join Session Now</button>
+            </div>
+          }
+          @case ('failed') {
+            <div class="animate-fade-in space-y-4">
+               <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-red-400 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+               </svg>
+              <p class="text-red-300">No consultants are available right now.</p>
+              <button (click)="resetConnection()" class="w-full max-w-xs text-sm bg-amber-500/20 text-amber-200 px-4 py-2 rounded-full hover:bg-amber-500/40 transition-colors">Try Again</button>
+            </div>
+          }
+        }
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="flex items-center">
+      <div class="h-full w-px bg-purple-500/30 hidden lg:block"></div>
+      <div class="w-full h-px bg-purple-500/30 lg:hidden"></div>
+    </div>
+
+    <!-- Schedule for Later Section -->
+    <div class="flex-1 flex flex-col">
+      @if (!submitted()) {
+        <div class="animate-fade-in">
+          <h3 class="font-orbitron text-2xl text-amber-300 text-center">Schedule for Later</h3>
+          <p class="text-gray-400 mt-2 text-center">
+            Find a time that works for you.
+          </p>
+
+          <form (submit)="requestSession($event)" class="mt-8 space-y-4">
+            <div>
+              <label for="date" class="block text-sm font-medium text-gray-300 mb-1 sr-only">Preferred Date</label>
+              <input 
+                type="date" 
+                id="date"
+                class="w-full bg-gray-900/80 px-4 py-3 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-gray-200"
+                [style.color-scheme]="'dark'"
+                required>
+            </div>
+            <div>
+              <label for="time" class="block text-sm font-medium text-gray-300 mb-1 sr-only">Preferred Time</label>
+              <input 
+                type="time" 
+                id="time"
+                class="w-full bg-gray-900/80 px-4 py-3 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-gray-200"
+                [style.color-scheme]="'dark'"
+                required>
+            </div>
+            <div>
+              <label for="reason" class="block text-sm font-medium text-gray-300 mb-1 sr-only">Reason for Session (optional)</label>
+              <textarea 
+                id="reason"
+                rows="3"
+                placeholder="Briefly describe what you'd like to discuss..."
+                class="w-full bg-gray-900/80 px-4 py-3 rounded-lg border border-purple-500/30 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-gray-200 placeholder-gray-500"></textarea>
+            </div>
+            
+            <button type="submit" class="w-full mt-2 relative inline-flex items-center justify-center px-10 py-3 overflow-hidden font-medium text-amber-300 transition duration-300 ease-out border-2 border-amber-500 rounded-full shadow-md group">
+              <span class="absolute inset-0 flex items-center justify-center w-full h-full text-white duration-300 -translate-x-full bg-amber-500 group-hover:translate-x-0 ease">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              </span>
+              <span class="absolute flex items-center justify-center w-full h-full text-amber-300 transition-all duration-300 transform group-hover:translate-x-full ease">Submit Request</span>
+              <span class="relative invisible">Submit Request</span>
+            </button>
+          </form>
+        </div>
+      } @else {
+        <div class="flex flex-col items-center justify-center h-full text-center animate-fade-in">
+          <h3 class="font-orbitron text-2xl text-green-300">Request Sent!</h3>
+          <p class="text-gray-400 mt-2 max-w-md">
+            You will be notified to confirm your session.
+          </p>
+          <button (click)="bookAnother()" class="mt-8 text-sm bg-amber-500/20 text-amber-200 px-4 py-2 rounded-full hover:bg-amber-500/40 transition-colors">Book Another Session</button>
+        </div>
+      }
+    </div>
+
+  </div>
+</main>

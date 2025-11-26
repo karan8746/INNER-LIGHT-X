@@ -1,0 +1,7 @@
+{
+  "name": "InnerLight X",
+  "description": "An AI-powered, privacy-first mental wellness companion for youth aged 13-25. Engage in empathetic conversations with Luma X, track your mood, and find helpful resources.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
