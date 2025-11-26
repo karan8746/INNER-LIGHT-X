@@ -39,24 +39,37 @@ export class ChatComponent {
     this.isLoading.set(true);
     this.messages.set([]); // Clear previous messages
     
-    // Create a placeholder for AI's first message
-    this.messages.update(m => [...m, { author: 'ai', content: '' }]);
+    const placeholderId = this.generateUniqueId();
+    this.messages.update(m => [...m, { id: placeholderId, author: 'ai', content: '' }]);
     
-    const stream = await this.geminiService.sendMessageStream(`The user is feeling ${this.initialMood()}. Start the conversation gently.`);
-    
-    if (stream) {
-      for await (const chunk of stream) {
-        const chunkText = chunk.text;
-        this.messages.update(msgs => {
-          const lastMsg = msgs[msgs.length - 1];
-          lastMsg.content += chunkText;
-          return [...msgs];
-        });
-        this.scrollToBottom();
+    try {
+      const stream = await this.geminiService.sendMessageStream(`The user is feeling ${this.initialMood()}. Start the conversation gently.`);
+      
+      if (stream) {
+        for await (const chunk of stream) {
+          const chunkText = chunk.text;
+          this.messages.update(msgs => 
+            msgs.map(msg => 
+              msg.id === placeholderId 
+                ? { ...msg, content: msg.content + chunkText } 
+                : msg
+            )
+          );
+          this.scrollToBottom();
+        }
       }
+    } catch (error) {
+      console.error("Error during initial conversation stream:", error);
+      this.messages.update(msgs => 
+        msgs.map(msg => 
+          msg.id === placeholderId 
+            ? { ...msg, content: "I'm sorry, I'm having a little trouble connecting right now. Please try again in a moment." } 
+            : msg
+        )
+      );
+    } finally {
+      this.isLoading.set(false);
     }
-    
-    this.isLoading.set(false);
   }
 
   async sendMessage(): Promise<void> {
@@ -66,13 +79,14 @@ export class ChatComponent {
     }
 
     // Add user message to chat
-    this.messages.update(m => [...m, { author: 'user', content: messageContent }]);
+    this.messages.update(m => [...m, { id: this.generateUniqueId(), author: 'user', content: messageContent }]);
     this.userInput.set('');
     this.isLoading.set(true);
 
     // Crisis detection
     if (this.detectCrisis(messageContent)) {
       this.messages.update(m => [...m, { 
+        id: this.generateUniqueId(),
         author: 'system', 
         content: "It sounds like you're going through a difficult time. Please know that help is available. You can connect with people who can support you by calling or texting 988 anytime in the US and Canada. In the UK, you can call 111." 
       }]);
@@ -80,30 +94,45 @@ export class ChatComponent {
       return;
     }
 
-    // Create placeholder for AI response
-    this.messages.update(m => [...m, { author: 'ai', content: '' }]);
-
-    const stream = await this.geminiService.sendMessageStream(messageContent);
-    if (stream) {
-      for await (const chunk of stream) {
-        const chunkText = chunk.text;
-        this.messages.update(msgs => {
-          const lastMsg = msgs[msgs.length - 1];
-          if(lastMsg && lastMsg.author === 'ai') {
-            lastMsg.content += chunkText;
-          }
-          return [...msgs];
-        });
-        this.scrollToBottom();
-      }
-    }
+    const aiPlaceholderId = this.generateUniqueId();
+    this.messages.update(m => [...m, { id: aiPlaceholderId, author: 'ai', content: '' }]);
     
-    this.isLoading.set(false);
+    try {
+      const stream = await this.geminiService.sendMessageStream(messageContent);
+      if (stream) {
+        for await (const chunk of stream) {
+          const chunkText = chunk.text;
+          this.messages.update(msgs => 
+            msgs.map(msg => 
+              msg.id === aiPlaceholderId 
+                ? { ...msg, content: msg.content + chunkText } 
+                : msg
+            )
+          );
+          this.scrollToBottom();
+        }
+      }
+    } catch (error) {
+      console.error("Error during message stream:", error);
+       this.messages.update(msgs => 
+        msgs.map(msg => 
+          msg.id === aiPlaceholderId 
+            ? { ...msg, content: "I'm having some trouble responding. Could you please try sending that again?" } 
+            : msg
+        )
+      );
+    } finally {
+      this.isLoading.set(false);
+    }
   }
 
   private detectCrisis(message: string): boolean {
     const lowerCaseMessage = message.toLowerCase();
     return this.crisisKeywords.some(keyword => lowerCaseMessage.includes(keyword));
+  }
+  
+  private generateUniqueId(): string {
+    return Date.now().toString(36) + Math.random().toString(36).substring(2);
   }
 
   private scrollToBottom(): void {
